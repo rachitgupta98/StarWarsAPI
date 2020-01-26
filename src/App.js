@@ -1,24 +1,69 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import useFetch from "./useFetch";
+import MUIDataTable from "mui-datatables";
+const columns = [
+  {
+    name: "name",
+    label: "Name",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+
+  {
+    name: "gender",
+    label: "Gender",
+    options: {
+      filter: false,
+      sort: false
+    }
+  },
+  {
+    name: "height",
+    label: "Height",
+    options: {
+      filter: false,
+      sort: true
+    }
+  },
+  {
+    name: "homeworld",
+    label: "Homeworld",
+    options: {
+      filter: true,
+      sort: false
+    }
+  },
+  {
+    name: "birth_year",
+    label: "Birth_year",
+    options: {
+      filter: false,
+      sort: false
+    }
+  }
+];
 
 function App() {
+  let url = "https://swapi.co/api/people";
+  const data = useFetch(url);
+  const options = {
+    print: false,
+    download: false,
+    viewColumns: false,
+    selectableRowsOnClick: true,
+    selectableRows: "none"
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <MUIDataTable
+        title={"Star Wars"}
+        data={data}
+        columns={columns}
+        options={options}
+      />
     </div>
   );
 }
