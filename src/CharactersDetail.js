@@ -46,7 +46,7 @@ export default function CharactersDetail() {
         <CardContent>
           {info.map(d =>
             d !== null ? (
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h5" component="h2" key={d}>
                 {d.name}
               </Typography>
             ) : (
@@ -56,7 +56,12 @@ export default function CharactersDetail() {
 
           {info.map(d =>
             d !== null ? (
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                key={d}
+              >
                 <li>{"Height :" + d.height}</li>
                 <li>{"Mass :" + d.mass}</li>
                 <li>{"Hair Color :" + d.hair_color}</li>

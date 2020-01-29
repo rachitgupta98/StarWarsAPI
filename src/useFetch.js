@@ -6,6 +6,7 @@ export default function useFetch(url) {
     fetch(url)
       .then(response => response.json())
       .then(data => {
+        setFullData(data.results);
         setData(
           data.results.map(d => {
             return {
@@ -17,7 +18,6 @@ export default function useFetch(url) {
             };
           })
         );
-        setFullData(data.results);
       });
   }, []);
   return { data, fullData };
