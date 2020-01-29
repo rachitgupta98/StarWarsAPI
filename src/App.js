@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import React, { useState, useEffect, Fragment } from "react";
 import useFetch from "./useFetch";
 import MUIDataTable from "mui-datatables";
+
+import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 const columns = [
   {
     name: "name",
@@ -46,26 +48,34 @@ const columns = [
   }
 ];
 
-function App() {
+const App = () => {
+  let history = useHistory();
+
   let url = "https://swapi.co/api/people";
-  const data = useFetch(url);
+  const fullData = useFetch(url).fullData;
+  const data = useFetch(url).data;
+
+  // console.log(fullData);
+  const onAct = rowData =>
+    history.push("/details", { datas: rowData, fullData: fullData });
   const options = {
     print: false,
     download: false,
     viewColumns: false,
-    selectableRowsOnClick: true,
-    selectableRows: "none"
+    selectableRowsOnClick: false,
+    selectableRows: "none",
+    responsive: "scrollMaxHeight",
+    onRowClick: onAct
   };
-  return (
-    <div>
-      <MUIDataTable
-        title={"Star Wars"}
-        data={data}
-        columns={columns}
-        options={options}
-      />
-    </div>
-  );
-}
 
-export default App;
+  return (
+    <MUIDataTable
+      title={"Star Wars"}
+      data={data}
+      columns={columns}
+      options={options}
+    />
+  );
+};
+
+export default withRouter(App);
